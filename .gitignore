@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+dist/
+build/
+
+# 项目本地临时文件（run_python 的脚本、冒烟测试产物）
+.haagent_tmp/
+
+# 密钥与本地配置
+.env
+.env.*
+
+# IDE
+.idea/
+.vscode/
+
+# 系统
+.DS_Store
+Thumbs.db
