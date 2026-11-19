@@ -6,7 +6,13 @@ def start():
 
     while True:
         user_input = input("Human:")
-        chatAgent.speak(user_input)
+
+        oper = user_input.split(" ")[0]
+        if oper == "/quit":
+            break
+        if oper :
+            chatAgent.speak(user_input)
+            continue
 
 
 __all__ = ['start']

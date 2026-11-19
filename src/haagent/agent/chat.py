@@ -1,4 +1,6 @@
-from langchain_core.messages import SystemMessage, HumanMessage, BaseMessage, AIMessageChunk, ToolMessage
+from langchain.agents import create_agent
+from langchain.agents.middleware import SummarizationMiddleware
+from langchain_core.messages import SystemMessage, HumanMessage, BaseMessage, AIMessageChunk, ToolMessage, AIMessage
 from langchain_ollama import ChatOllama
 
 from haagent.tools import TOOLS
@@ -10,9 +12,24 @@ class ChatModel():
         print("build agent")
         init_model = ChatOllama(
             model="qwen3.5:4b",
-            temperature=0.7
+            temperature=0.7,
+
         )
         self.model = init_model.bind_tools(TOOLS)
+
+        # self.model = create_agent(
+        #     model="ollama:qwen3.5:4b",
+        #     tools=TOOLS,
+        #     middleware=[
+        #         SummarizationMiddleware(
+        #             model="ollama:qwen3.5:4b",
+        #             max_tokens_before_summary=4000,
+        #             messages_to_keep=20,
+        #             summary_prompt="请你总结一下对话历史都说了什么，同时摘出重要的信息，提供后续对话参考",
+        #         ),
+        #     ],
+        # )
+
         self.tool_map = {t.name: t for t in TOOLS}
 
     def get_model(self):
@@ -44,6 +61,7 @@ class ChatContext():
                     accumulated_chunk += chunk
                 print(chunk.content, end="", flush=True)
 
+            print()
             if accumulated_chunk is None:
                 break
 
@@ -70,6 +88,9 @@ class ChatContext():
                 continue
             else:
                 # 没有工具调用，本轮结束
+                # self.messages.append(AIMessage(
+                #     content=full_msg
+                # ))
                 print()
                 break
 

@@ -21,7 +21,7 @@ from pathlib import Path
 
 from langchain.tools import tool
 
-from haagent.utils import agent_prompt
+from haagent.utils.prompt_utils import agent_prompt
 from haagent.utils.timer_utils import timer
 
 MAX_OUTPUT_CHARS = 6000
@@ -32,7 +32,7 @@ DANGEROUS_PATTERNS = [
     r"\brm\s+(-[a-zA-Z]*\s+)*-?[rR]?f?[rR]?\s+(/|~|\$HOME)\s*$",  # rm -rf /
     r"\brm\s+-[a-zA-Z]*[rR][a-zA-Z]*\s+(/|~)\b",
     r"\bmkfs(\.\w+)?\b",                       # 格式化分区
-    r"\bdd\s+if=.+\s+of=/dev/",               # 直接写磁盘
+    r"\bdd\s+if=.+\s+of=/dev/",                # 直接写磁盘
     r"\bformat\s+[a-zA-Z]:",                   # Windows format
     r"\b(shutdown|reboot|halt|poweroff)\b",    # 关机重启
     r"\bdel\s+/[fsq]\b",                       # del /f /s /q

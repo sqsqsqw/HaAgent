@@ -14,7 +14,7 @@ from pathlib import Path
 import click
 from langchain.tools import tool
 
-from haagent.utils import agent_prompt
+from haagent.utils.prompt_utils import agent_prompt
 from haagent.utils.timer_utils import timer
 
 # 单次返回给模型的最大字符数，避免把上下文撑爆
