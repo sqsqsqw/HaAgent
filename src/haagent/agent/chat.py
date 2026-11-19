@@ -49,7 +49,9 @@ class ChatContext():
         if self.messages is None:
             self.messages: list[BaseMessage] = [model.get_system_prompt()]
 
-        self.messages.append(HumanMessage(content=question))
+        # 使用压缩管理器添加消息
+        msg = HumanMessage(content=question)
+        self.context_manager.add_message(msg)
         print("AI:")
 
         while True:
